@@ -50,10 +50,10 @@ void nRF_Init(void){
 
 	while (SPI2->SR & (1<<7)); 					//Ждем пока SPI2 занят
 
-	#ifdef PRINT_DEBUG_INFORMATION
+	#ifdef PRINT_DEBUG_nRF24L01
 		USART1_Send_String((u8*)"\nThe initial state registers nRF after reset...\n");
 		nRF_get_Register_Value(); //Читаем регистры nRF
-	#endif //PRINT_DEBUG_INFORMATION
+	#endif //PRINT_DEBUG_nRF24L01
 
 		nRF_Config(); //Конфигурация nRF24L01
 }
@@ -92,10 +92,10 @@ void nRF_Config(void){
 
 	nRF_RX_Mode(); //Режим приёма данных nRF
 
-	#ifdef PRINT_DEBUG_INFORMATION
+	#ifdef PRINT_DEBUG_nRF24L01
 		USART1_Send_String((u8*)"The state registers nRF after configuration...\n");
 		nRF_get_Register_Value(); //Читаем регистры nRF
-	#endif //PRINT_DEBUG_INFORMATION
+	#endif //PRINT_DEBUG_nRF24L01
 }
 
 //**************************************************************************
@@ -154,10 +154,10 @@ void EXTI15_10_IRQHandler(void){
 	USART1_Print_Byte(nRF_number_of_LOST_data_packets, HEX);
 	USART1_Send_Byte('\n');
 
-#ifdef PRINT_DEBUG_INFORMATION
+#ifdef PRINT_DEBUG_nRF24L01
 	USART1_Send_String((u8*)"\nThe state registers nRF after event...\n");
 	nRF_get_Register_Value(); //Читаем регистры nRF
-#endif //PRINT_DEBUG_INFORMATION
+#endif //PRINT_DEBUG_nRF24L01
 
 	EXTI->PR = 1<<10; //Cбрасываем флаг прерывания
 }
