@@ -1,6 +1,8 @@
 #ifndef _DTYPE_H
 #define _DTYPE_H
 
+#define NULL 0
+
 //Определение пользовательских типов данных...
 enum logic {HIGH = 1, LOW = 0}; 		//Логические сигналы
 enum boolean {TRUE = 1, FALSE = 0}; 	//Логические операторы

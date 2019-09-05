@@ -7,10 +7,18 @@
 //Инициализация SPI1...
 void L3GD20_init(){
 
+	//After power supply is applied, the L3GD20 performs a 10 ms boot procedure
+
 	USART1_Send_String((u8*)"Initialization SPI1...\n");
 
 	RCC->AHBENR |= RCC_AHBENR_GPIOEEN;	//Включаем тактирование GPIOE
 	RCC->APB2ENR |= RCC_APB2ENR_SPI1EN; //Включаем тактирование SPI1
+
+	//Линия INT1 (PE0)...
+		GPIOE->MODER |= (0<<1|0<<0);				//PE0 - Input mode
+
+	//Линия DRDY/INT2 (PE1)...
+		GPIOE->MODER |= (0<<3|0<<2);				//PE1 - Input mode
 
 	//Линия CS (PE3)...
 		GPIOE->MODER |= (0<<7|1<<6);				//PE3 - General purpose output mode
@@ -42,10 +50,25 @@ void L3GD20_init(){
 	while (SPI1->SR & (1<<7));					//Ждем пока SPI1 занят
 
 //Читаем регистр WHOAMI, L3GD20
-	if (L3GD20_Exchange_Word(0b10000000, 0x0F, 0) == 0xD4)
+	if (L3GD20_Exchange_Word(READ, WHO_AM_I, NULL) == 0xD4)
 		USART1_Send_String((u8*)"Initialization L3GD20 successful!...\n");
 	else
 		USART1_Send_String((u8*)"Initialization L3GD20 error...\n");
+
+}
+
+//**************************************************************************
+//**************************************************************************
+
+//Конфигурация L3GD20...
+void L3GD20_Config(void){
+
+
+
+#ifdef PRINT_DEBUG_L3GD20
+	USART1_Send_String((u8*)"\nThe state registers L3GD20 after reset...\n");
+	L3GD20_get_Register_Value();	//Читаем регистры L3GD20
+#endif //PRINT_DEBUG_L3GD20
 
 }
 
@@ -77,3 +100,28 @@ u8 L3GD20_Exchange_Word(u8 cmd, u8 addr, u8 data){
 
 //**************************************************************************
 //**************************************************************************
+
+//Читаем регистры L3GD20...
+void L3GD20_get_Register_Value(void){
+
+	USART1_Send_String((u8*)"WHO_AM_I........");
+	USART1_Print_Byte(L3GD20_Exchange_Word(READ, WHO_AM_I, NULL), BIN);
+	USART1_Send_Byte('\n');
+
+//	USART1_Send_String((u8*)"WHO_AM_I........");
+//	USART1_Print_Byte(L3GD20_Exchange_Word(READ, WHO_AM_I, NULL), BIN);
+//	USART1_Send_Byte('\n');
+//
+//	USART1_Send_String((u8*)"WHO_AM_I........");
+//	USART1_Print_Byte(L3GD20_Exchange_Word(READ, WHO_AM_I, NULL), BIN);
+//	USART1_Send_Byte('\n');
+//
+//	USART1_Send_String((u8*)"WHO_AM_I........");
+//	USART1_Print_Byte(L3GD20_Exchange_Word(READ, WHO_AM_I, NULL), BIN);
+//	USART1_Send_Byte('\n');
+
+
+
+	USART1_Send_Byte('\n');
+	USART1_Send_Byte('\n');
+}
