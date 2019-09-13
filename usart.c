@@ -26,8 +26,7 @@ void USART1_Init(void){
 	USART1->CR1 |= 1<<5;	//Включить прерывание приёмника
 	NVIC_EnableIRQ(USART1_IRQn);
 
-	USART1_Send_Byte('\n'); //Начинаем выводить текст с новой строки
-
+	USART1_Send_String((u8*)"Initialization USART1...\n");
 }
 
 //**************************************************************************

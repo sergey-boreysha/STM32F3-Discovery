@@ -50,6 +50,12 @@ void nRF_Init(void){
 
 	while (SPI2->SR & (1<<7)); 					//Ждем пока SPI2 занят
 
+//Читаем регистр WHOAMI, L3GD20
+	//if (L3GD20_Exchange_Word(READ, WHO_AM_I, NULL) == 0xD4)
+		USART1_Send_String((u8*)"Initialization nRF24L01 successful!...\n");
+	//else
+		//USART1_Send_String((u8*)"Initialization L3GD20 error...\n");
+
 	#ifdef PRINT_DEBUG_nRF24L01
 		USART1_Send_String((u8*)"\nThe initial state registers nRF after reset...\n");
 		nRF_get_Register_Value(); //Читаем регистры nRF

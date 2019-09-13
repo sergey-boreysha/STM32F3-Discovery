@@ -3,7 +3,6 @@
 #define _L3GD20_H
 
 //Подключаемые библиотеки...
-//#include <stm32f30x.h>
 #include "stm32_stdlib.h"	//Функции общего назначения
 #include "dtype.h"			//Определение пользовательских типов данных
 #include "usart.h"			//Библиотка USART
@@ -29,12 +28,12 @@
 #define FIFO_SRC_REG	0x2F //r output
 #define INT1_CFG		0x30 //rw 00000000
 #define INT1_SRC		0x31 //r output
-#define INT1_TSH_XH		0x32 //rw 00000000
-#define INT1_TSH_XL		0x33 //rw 00000000
-#define INT1_TSH_YH		0x34 //rw 00000000
-#define INT1_TSH_YL		0x35 //rw 00000000
-#define INT1_TSH_ZH		0x36 //rw 00000000
-#define INT1_TSH_ZL		0x37 //rw 00000000
+#define INT1_THS_XH		0x32 //rw 00000000
+#define INT1_THS_XL		0x33 //rw 00000000
+#define INT1_THS_YH		0x34 //rw 00000000
+#define INT1_THS_YL		0x35 //rw 00000000
+#define INT1_THS_ZH		0x36 //rw 00000000
+#define INT1_THS_ZL		0x37 //rw 00000000
 #define INT1_DURATION	0x38 //rw 00000000
 
 #define READ	0b10000000
@@ -42,6 +41,11 @@
 
 #define L3GD20_CS_LOW_LEVEL {GPIOE->BSRR |= 1<<19;_delay(100);}	//Начало сеанса обмена по шине SPI1
 #define L3GD20_CS_HIGH_LEVEL {_delay(100);GPIOE->BSRR |= 1<<3;}	//Завершение сеанса обмена по шине SPI1
+
+//Типы данных...
+
+//emum
+
 
 //Прототипы функций...
 void L3GD20_init();									//Инициализация L3GD20
