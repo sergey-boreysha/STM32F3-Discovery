@@ -42,15 +42,48 @@
 #define L3GD20_CS_LOW_LEVEL {GPIOE->BSRR |= 1<<19;_delay(100);}	//Начало сеанса обмена по шине SPI1
 #define L3GD20_CS_HIGH_LEVEL {_delay(100);GPIOE->BSRR |= 1<<3;}	//Завершение сеанса обмена по шине SPI1
 
-//Типы данных...
+//Структуры регистров...
+typedef union //STATUS_REG description
+	{
+		struct
+			{
+				u8 XDA:1;	//X axis new data available
+				u8 YDA:1;	//Y axis new data available
+				u8 ZDA:1;	//Z axis new data available
+				u8 ZYXDA:1;	//X, Y, Z -axis new data available
+				u8 XOR:1;	//X axis data overrun
+				u8 YOR:1;	//Y axis data overrun
+				u8 ZOR:1;	//Z axis data overrun
+				u8 ZYXOR:1; //X, Y, Z -axis data overrun
+			}bit;
 
-//emum
+		u8 reg;
 
+	}__STATUS_REG__;
+
+typedef union //CTRL_REG1 description
+	{
+		struct
+			{
+				u8 X_axis_enable:1;
+				u8 Y_axis_enable:1;
+				u8 Z_axis_enable:1;
+				u8 Power_down_mode_enable:1;
+				u8 Bandwidth_selection:2;
+				u8 Output_data_rate_selection:2;
+			}bit;
+
+		u8 reg;
+
+	}__CTRL_REG1__;
+
+	__STATUS_REG__ _STATUS_REG;
+	__CTRL_REG1__ _CTRL_REG1;
 
 //Прототипы функций...
 void L3GD20_init();									//Инициализация L3GD20
 u8 L3GD20_Exchange_Word(u8 cmd, u8 addr, u8 data);	//Чтение байта по адресу
 void L3GD20_get_Register_Value(void);				//Читаем регистры L3GD20
-void L3GD20_Config(void); //Конфигурация L3GD20
+void L3GD20_Config(void);							//Конфигурация L3GD20
 
 #endif //_L3GD20_H

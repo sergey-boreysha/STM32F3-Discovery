@@ -69,22 +69,31 @@ void L3GD20_init(){
 //Конфигурация L3GD20...
 void L3GD20_Config(void){
 
-	//Последовательность настройки...
-		//	1. Write CTRL_REG2
-		//	2. Write CTRL_REG3
-		//	3. Write CTRL_REG4
-		//	4. Write CTRL_REG6
-		//	5. Write REFERENCE
-		//	6. Write INT1_THS
-		//	7. Write INT1_DUR
-		//	8. Write INT1_CFG
-		//	9. Write CTRL_REG5
-		//	10. Write CTRL_REG1
+//Последовательность настройки...
+	//L3GD20_Exchange_Word(WRITE, CTRL_REG2, 0b00000000);		//Настройка фильтра
+	//L3GD20_Exchange_Word(WRITE, CTRL_REG3, 0b00000000);		//Натройка прерываний
+	//L3GD20_Exchange_Word(WRITE, CTRL_REG4, 0b00000000);		//Block data update
+	//L3GD20_Exchange_Word(WRITE, REFERENCE, 0b00000000);		//Reference value for interrupt generation
+	//L3GD20_Exchange_Word(WRITE, INT1_THS, 0b00000000);		//Interrupt threshold
+	//L3GD20_Exchange_Word(WRITE, INT1_DURATION, 0b00000000);	//
+	//L3GD20_Exchange_Word(WRITE, INT1_CFG, 0b00000000);		//
+	//L3GD20_Exchange_Word(WRITE, CTRL_REG5, 0b00000000);		//
 
-//#ifdef PRINT_DEBUG_L3GD20
-//	USART1_Send_String((u8*)"\nThe state registers L3GD20 after configuration...\n");
-//	L3GD20_get_Register_Value();	//Читаем регистры L3GD20
-//#endif //PRINT_DEBUG_L3GD20
+//Настраиваем регистр CTRL_REG1...
+	_CTRL_REG1.bit.X_axis_enable = 1;
+	_CTRL_REG1.bit.Y_axis_enable = 0;
+	_CTRL_REG1.bit.Z_axis_enable = 0;
+	_CTRL_REG1.bit.Output_data_rate_selection = 00;
+	_CTRL_REG1.bit.Bandwidth_selection = 00;
+	_CTRL_REG1.bit.Power_down_mode_enable = 1;
+	L3GD20_Exchange_Word(WRITE, CTRL_REG1, _CTRL_REG1.reg);
+
+
+
+#ifdef PRINT_DEBUG_L3GD20
+	USART1_Send_String((u8*)"\nThe state registers L3GD20 after configuration...\n");
+	L3GD20_get_Register_Value();	//Читаем регистры L3GD20
+#endif //PRINT_DEBUG_L3GD20
 
 }
 
@@ -98,16 +107,16 @@ u8 L3GD20_Exchange_Word(u8 cmd, u8 addr, u8 data){
 
 		L3GD20_CS_LOW_LEVEL;
 
-			SPI1->DR = cmd | addr; //Передаём адрес целевого регистра + комманда записи
+		*(volatile uint8_t *)&SPI1->DR = cmd | addr; //Передаём адрес целевого регистра + комманда записи
 			while (SPI1->SR & (1<<7)); //Ждем пока SPI1 занят
 
-					registr = SPI1->DR;
+					registr = *(volatile uint8_t *)&SPI1->DR;
 					_delay(500); //Пауза 15мкс
 
-				SPI1->DR = data; //Передаём байт
+					*(volatile uint8_t *)&SPI1->DR = data; //Передаём байт
 				while (SPI1->SR & (1<<7)); //Ждем пока SPI1 занят
 
-			registr = SPI1->DR;
+			registr = *(volatile uint8_t *)&SPI1->DR;
 
 		L3GD20_CS_HIGH_LEVEL;
 
