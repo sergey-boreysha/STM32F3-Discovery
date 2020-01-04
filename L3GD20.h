@@ -43,7 +43,7 @@
 #define L3GD20_CS_HIGH_LEVEL {_delay(100);GPIOE->BSRR |= 1<<3;}	//Завершение сеанса обмена по шине SPI1
 
 //Структуры регистров...
-typedef union //STATUS_REG description
+union //STATUS_REG description
 	{
 		struct
 			{
@@ -59,9 +59,9 @@ typedef union //STATUS_REG description
 
 		u8 reg;
 
-	}__STATUS_REG__;
+	}_STATUS_REG;
 
-typedef union //CTRL_REG1 description
+union //CTRL_REG1 description
 	{
 		struct
 			{
@@ -75,10 +75,10 @@ typedef union //CTRL_REG1 description
 
 		u8 reg;
 
-	}__CTRL_REG1__;
+	}_CTRL_REG1;
 
-	__STATUS_REG__ _STATUS_REG;
-	__CTRL_REG1__ _CTRL_REG1;
+	//__STATUS_REG__ _STATUS_REG;
+	//__CTRL_REG1__ _CTRL_REG1;
 
 //Прототипы функций...
 void L3GD20_init();									//Инициализация L3GD20

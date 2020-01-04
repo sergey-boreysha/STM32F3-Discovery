@@ -7,10 +7,10 @@ asm volatile ("CPSID I"); //Глобальное запрещение преры
 
 	init_GPIO();		//Инициализация GPIO
 	USART1_Init();		//Инициализация USART1
+	RCC_init();			//Инициализация ФАПЧ
 	//ADC1_Init();		//Инициализация ADC1
 
 	L3GD20_init(); 		//Инициализация L3GD20
-
 	//nRF_Init();			//Инициализация nRF
 
 asm volatile ("CPSIE I"); //Глобальное разрешение прерываний
@@ -36,7 +36,7 @@ asm volatile ("CPSIE I"); //Глобальное разрешение преры
 		//__nRF_Protocol_Handler();		//Обработчик протокола nRF
 
 
-		_STATUS_REG.reg = L3GD20_Exchange_Word(READ, STATUS, NULL);
+		_STATUS_REG.reg = L3GD20_Exchange_Word(READ, STATUS_REG, NULL);
 
 		USART1_Send_String((u8*)"STATUS_REG........");
 		USART1_Print_Byte(_STATUS_REG.reg, BIN);

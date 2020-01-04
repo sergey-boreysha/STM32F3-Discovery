@@ -18,7 +18,8 @@ void USART1_Init(void){
 	GPIOA->MODER |= (1<<21|0<<20);			//RX, PA10 AF7 mode
 	GPIOA->AFRH |= (0<<11|1<<10|1<<9|1<<8);	//PA10 in AF7 mode
 
-	USART1->BRR = 0x1D4C;	//Baudrate 9600
+	//USART1->BRR = 0x1D4C;	//Baudrate 9600, 72MHz
+	USART1->BRR = 0x0341;	//Baudrate 9600, 8MHz
 	USART1->CR1 |= 1<<0;	//USART1 enable
 	USART1->CR1 |= 1<<3;	//Transmitter enable
 	USART1->CR1 |= 1<<2;	//Reciver enable

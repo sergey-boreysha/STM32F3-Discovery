@@ -129,6 +129,14 @@ u8 L3GD20_Exchange_Word(u8 cmd, u8 addr, u8 data){
 //Читаем регистры L3GD20...
 void L3GD20_get_Register_Value(void){
 
+	USART1_Send_String((u8*)"WHO_AM_I.........");
+	USART1_Print_Byte(L3GD20_Exchange_Word(READ, WHO_AM_I, NULL), BIN);
+	USART1_Send_Byte('\n');
+
+	USART1_Send_String((u8*)"CTRL_REG1........");
+	USART1_Print_Byte(L3GD20_Exchange_Word(READ, CTRL_REG1, NULL), BIN);
+	USART1_Send_Byte('\n');
+
 	USART1_Send_String((u8*)"CTRL_REG2........");
 	USART1_Print_Byte(L3GD20_Exchange_Word(READ, CTRL_REG2, NULL), BIN);
 	USART1_Send_Byte('\n');
@@ -145,48 +153,36 @@ void L3GD20_get_Register_Value(void){
 	USART1_Print_Byte(L3GD20_Exchange_Word(READ, CTRL_REG5, NULL), BIN);
 	USART1_Send_Byte('\n');
 
-	USART1_Send_String((u8*)"REFERENCE........");
-	USART1_Print_Byte(L3GD20_Exchange_Word(READ, REFERENCE, NULL), BIN);
-	USART1_Send_Byte('\n');
+//	USART1_Send_String((u8*)"INT1_THS_XH........");
+//	USART1_Print_Byte(L3GD20_Exchange_Word(READ, INT1_THS_XH, NULL), BIN);
+//	USART1_Send_Byte('\n');
+//
+//	USART1_Send_String((u8*)"INT1_THS_XL........");
+//	USART1_Print_Byte(L3GD20_Exchange_Word(READ, INT1_THS_XL, NULL), BIN);
+//	USART1_Send_Byte('\n');
+//
+//	USART1_Send_String((u8*)"INT1_THS_YH........");
+//	USART1_Print_Byte(L3GD20_Exchange_Word(READ, INT1_THS_YH, NULL), BIN);
+//	USART1_Send_Byte('\n');
+//
+//	USART1_Send_String((u8*)"INT1_THS_YL........");
+//	USART1_Print_Byte(L3GD20_Exchange_Word(READ, INT1_THS_YL, NULL), BIN);
+//	USART1_Send_Byte('\n');
+//
+//	USART1_Send_String((u8*)"INT1_THS_ZH........");
+//	USART1_Print_Byte(L3GD20_Exchange_Word(READ, INT1_THS_ZH, NULL), BIN);
+//	USART1_Send_Byte('\n');
+//
+//	USART1_Send_String((u8*)"INT1_THS_ZL........");
+//	USART1_Print_Byte(L3GD20_Exchange_Word(READ, INT1_THS_ZL, NULL), BIN);
+//	USART1_Send_Byte('\n');
+//
+//	USART1_Send_String((u8*)"INT1_CFG.........");
+//	USART1_Print_Byte(L3GD20_Exchange_Word(READ, INT1_CFG, NULL), BIN);
+//	USART1_Send_Byte('\n');
 
-	USART1_Send_String((u8*)"INT1_THS_XH........");
-	USART1_Print_Byte(L3GD20_Exchange_Word(READ, INT1_THS_XH, NULL), BIN);
-	USART1_Send_Byte('\n');
-
-	USART1_Send_String((u8*)"INT1_THS_XL........");
-	USART1_Print_Byte(L3GD20_Exchange_Word(READ, INT1_THS_XL, NULL), BIN);
-	USART1_Send_Byte('\n');
-
-	USART1_Send_String((u8*)"INT1_THS_YH........");
-	USART1_Print_Byte(L3GD20_Exchange_Word(READ, INT1_THS_YH, NULL), BIN);
-	USART1_Send_Byte('\n');
-
-	USART1_Send_String((u8*)"INT1_THS_YL........");
-	USART1_Print_Byte(L3GD20_Exchange_Word(READ, INT1_THS_YL, NULL), BIN);
-	USART1_Send_Byte('\n');
-
-	USART1_Send_String((u8*)"INT1_THS_ZH........");
-	USART1_Print_Byte(L3GD20_Exchange_Word(READ, INT1_THS_ZH, NULL), BIN);
-	USART1_Send_Byte('\n');
-
-	USART1_Send_String((u8*)"INT1_THS_ZL........");
-	USART1_Print_Byte(L3GD20_Exchange_Word(READ, INT1_THS_ZL, NULL), BIN);
-	USART1_Send_Byte('\n');
-
-	USART1_Send_String((u8*)"INT1_DURATION........");
-	USART1_Print_Byte(L3GD20_Exchange_Word(READ, INT1_DURATION, NULL), BIN);
-	USART1_Send_Byte('\n');
-
-	USART1_Send_String((u8*)"INT1_CFG........");
-	USART1_Print_Byte(L3GD20_Exchange_Word(READ, INT1_CFG, NULL), BIN);
-	USART1_Send_Byte('\n');
-
-	USART1_Send_String((u8*)"CTRL_REG5........");
-	USART1_Print_Byte(L3GD20_Exchange_Word(READ, CTRL_REG5, NULL), BIN);
-	USART1_Send_Byte('\n');
-
-	USART1_Send_String((u8*)"CTRL_REG1........");
-	USART1_Print_Byte(L3GD20_Exchange_Word(READ, CTRL_REG1, NULL), BIN);
+	USART1_Send_String((u8*)"STATUS_REG.......");
+	USART1_Print_Byte(L3GD20_Exchange_Word(READ, STATUS_REG, NULL), BIN);
 	USART1_Send_Byte('\n');
 
 	USART1_Send_Byte('\n');
