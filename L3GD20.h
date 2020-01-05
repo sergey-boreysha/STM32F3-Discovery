@@ -7,7 +7,7 @@
 #include "dtype.h"			//Определение пользовательских типов данных
 #include "usart.h"			//Библиотка USART
 
-#define PRINT_DEBUG_L3GD20 //Печатать отладочную информацию в сервисный порт
+//#define PRINT_DEBUG_L3GD20 //Печатать отладочную информацию в сервисный порт
 
 #define WHO_AM_I		0x0F //r 11010100
 #define CTRL_REG1		0x20 //rw 00000111
@@ -42,8 +42,8 @@
 #define L3GD20_CS_LOW_LEVEL {GPIOE->BSRR |= 1<<19;_delay(100);}	//Начало сеанса обмена по шине SPI1
 #define L3GD20_CS_HIGH_LEVEL {_delay(100);GPIOE->BSRR |= 1<<3;}	//Завершение сеанса обмена по шине SPI1
 
-//Структуры регистров...
-union //STATUS_REG description
+//STATUS_REG description...
+union
 	{
 		struct
 			{
@@ -61,7 +61,8 @@ union //STATUS_REG description
 
 	}_STATUS_REG;
 
-union //CTRL_REG1 description
+//CTRL_REG1 description...
+union
 	{
 		struct
 			{
@@ -77,8 +78,6 @@ union //CTRL_REG1 description
 
 	}_CTRL_REG1;
 
-	//__STATUS_REG__ _STATUS_REG;
-	//__CTRL_REG1__ _CTRL_REG1;
 
 //Прототипы функций...
 void L3GD20_init();									//Инициализация L3GD20

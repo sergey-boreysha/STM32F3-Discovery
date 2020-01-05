@@ -18,7 +18,7 @@ void init_GPIO(void){
 	RCC->AHBENR |= RCC_AHBENR_GPIOEEN;	//Включаем тактирование GPIOE
 	GPIOE->MODER |= (0<<31|1<<30); 		//Green LED, на выход
 
-	//GPIOE_MODER |= (0<<17|1<<16); 	//Blue LED, PE8 на выход
+	GPIOE->MODER |= (0<<17|1<<16); 	//Blue LED, PE8 на выход
 	//GPIOE_MODER |= (0<<19|1<<18); 	//Red LED, PE9 на выход
 	//GPIOE_MODER |= (0<<21|1<<20); 	//Orange LED, на выход
 

@@ -9,7 +9,11 @@
 #define OFF 0
 
 //Индикатор выполнения основного цикла...
-#define SYSTEM_BLNK {GPIOE->ODR |= 1<<15;_delay(2000000);GPIOE->ODR &= ~(1<<15);_delay(2000000);}
+//#define SYSTEM_BLNK_ON 	GPIOE->ODR |= 1<<15;
+//#define SYSTEM_BLNK_OFF GPIOE->ODR &= ~(1<<15);
+//#define SYSTEM_BLNK 	{SYSTEM_BLNK_ON;_delay(2000000);SYSTEM_BLNK_OFF;_delay(2000000);}
+#define SYSTEM_BLNK 	{GPIOE->ODR ^= (1<<15);_delay(2000000);}
+
 
 //Подключаемые библиотеки...
 #include "init.h"		//Библиотка инициализации переферии

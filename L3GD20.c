@@ -69,6 +69,20 @@ void L3GD20_init(){
 //Конфигурация L3GD20...
 void L3GD20_Config(void){
 
+
+//Настраиваем прерывание таймера каждые 20мс...
+
+
+//Настраиваем регистр CTRL_REG1...
+	_CTRL_REG1.bit.X_axis_enable = 1;
+	_CTRL_REG1.bit.Y_axis_enable = 0;
+	_CTRL_REG1.bit.Z_axis_enable = 0;
+	_CTRL_REG1.bit.Power_down_mode_enable = 0;
+	_CTRL_REG1.bit.Bandwidth_selection = 00;
+	_CTRL_REG1.bit.Output_data_rate_selection = 00;
+
+L3GD20_Exchange_Word(WRITE, CTRL_REG1, _CTRL_REG1.reg);
+
 //Последовательность настройки...
 	//L3GD20_Exchange_Word(WRITE, CTRL_REG2, 0b00000000);		//Настройка фильтра
 	//L3GD20_Exchange_Word(WRITE, CTRL_REG3, 0b00000000);		//Натройка прерываний
@@ -78,16 +92,6 @@ void L3GD20_Config(void){
 	//L3GD20_Exchange_Word(WRITE, INT1_DURATION, 0b00000000);	//
 	//L3GD20_Exchange_Word(WRITE, INT1_CFG, 0b00000000);		//
 	//L3GD20_Exchange_Word(WRITE, CTRL_REG5, 0b00000000);		//
-
-//Настраиваем регистр CTRL_REG1...
-	_CTRL_REG1.bit.X_axis_enable = 1;
-	_CTRL_REG1.bit.Y_axis_enable = 0;
-	_CTRL_REG1.bit.Z_axis_enable = 0;
-	_CTRL_REG1.bit.Output_data_rate_selection = 00;
-	_CTRL_REG1.bit.Bandwidth_selection = 00;
-	_CTRL_REG1.bit.Power_down_mode_enable = 1;
-	L3GD20_Exchange_Word(WRITE, CTRL_REG1, _CTRL_REG1.reg);
-
 
 
 #ifdef PRINT_DEBUG_L3GD20
